@@ -8,15 +8,30 @@ function Dashboard() {
 
 
     const [asignar, setasignar] = useState(false);
+    const [menu, setmenu] = useState('');
+    const [alertupdate, setalertupdate] = useState(' ');
     const [archivosdiv, setarchivosdiv] = useState(false);
     const [tasklistdiv, settasklistdiv] = useState(false);
     const [listtask, setlisttask] = useState([]);
     const [newtask, setnewtask] = useState({ id: '', name: '', description: '', fecha: '', });
     const [filelist, setfilelist] = useState({});
-    const tasklist = async () => {
-        const { data } = await supabase.from('task').select().order('id', { ascending: true });
-        setlisttask(data)
+
+
+    function handlerdivtareas(e) {
+        setasignar(!asignar)
+        settasklistdiv(false)
+        setarchivosdiv(false)
+    }
+    function handlerdivlista(e) {
+        setasignar(false)
         settasklistdiv(!tasklistdiv)
+        setarchivosdiv(false)
+    }
+
+    const tasklist = async (e) => {
+        const { data } = await supabase.from('task').select().order('id', { ascending: false });
+        setlisttask(data)
+        handlerdivlista(e)
         console.log(listtask)
     }
 
@@ -27,9 +42,9 @@ function Dashboard() {
 
             const { data, error } = await supabase.auth.getSession()
 
-      
+
             if (data.session && data.session.user.email !== 'omarmendezt29@gmail.com') {
-             
+
                 navegacion('/')
             } else if (!data.session) {
                 console.log('no hay ni mielda')
@@ -55,12 +70,13 @@ function Dashboard() {
             .from('files')
             .list('tareas', {
                 limit: 100,
-                offset: 0,
-                sortBy: { column: 'name', order: 'asc' },
+                sortBy: { column: 'name', order: 'desc' }
             })
         setfilelist(data)
         console.log(error)
-        setarchivosdiv(!archivosdiv)
+        setarchivosdiv(true)
+        settasklistdiv(false)
+        setasignar(false)
         // 'https://emfjomsevzoytidqbiih.supabase.co/storage/v1/object/public/files/tareas/' + data[1].name
 
 
@@ -85,6 +101,12 @@ function Dashboard() {
             .update({ name: newtask.name, description: newtask.description, fecha: newtask.fecha })
             .eq('id', e.target.id)
         console.log(error)
+        if (!error) {
+            setalertupdate('Tarea actualizada');
+            setTimeout(function () {
+                setalertupdate(" ");
+            }, 2000); // 3000 milisegundos = 3 segundos
+        }
 
     }
 
@@ -101,9 +123,17 @@ function Dashboard() {
             });
     }
 
+    function handlermenu(e) {
+        e.preventDefault()
+        menu == ' -left-full' ? setmenu('') : setmenu(' -left-full')
+
+    }
+
+
     return (
         <div className='w-full grid grid-cols-12 bg-slate-900'>
-            <aside id="default-sidebar" className="col-span-2 h-screen" aria-label="Sidebar">
+            <button className='absolute top-0 right-0 p-3 bg-gray-200 m-4 z-10 rounded-md transition-all ease-in hover:bg-black hover:text-white ' onClick={e => handlermenu(e)}>Menu</button>
+            <aside id="default-sidebar" className={"absolute col-span-2 h-screen z-20" + menu} aria-label="Sidebar">
 
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
                     <ul className=" font-medium">
@@ -114,7 +144,7 @@ function Dashboard() {
                             </a>
                         </li>
 
-                        <li onClick={e => setasignar(!asignar)} className='hover:animate-pulse hover:pl-3'>
+                        <li onClick={e => handlerdivtareas(e)} className='hover:animate-pulse hover:pl-3'>
                             <a className="flex items-center p-2  py-6 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer transition-all ease-in-out ">
                                 <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path kelinecap="round" kelinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25"></path>
@@ -169,47 +199,54 @@ function Dashboard() {
                     </ul>
                 </div>
             </aside>
-            {asignar ? <div className=" col-span-6 bg-gray-900 ">
-                <div className="container p-16">
-                    <div className='flex flex-col w-96 m-auto gap-3'>
+
+
+            {asignar ? <div className="absolute w-full h-screen col-span-6 bg-slate-600 ">
+                <div className="container max-w-lg m-auto p-16">
+                    <div className='flex flex-col m-auto gap-3'>
                         <input onChange={e => setnewtask({ ...newtask, name: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='titulo' placeholder='Titulo' />
                         <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} className='h-72 resize-none bg-slate-500 text-white placeholder-slate-50' type="text" name='Descripcion' placeholder='Descripcion' />
                         <input onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='fecha' placeholder='Fecha de entrega' />
-                      
+
                         <button onClick={e => handlercreatenewtask(e)} className='bg-black py-3 text-white hover:bg-slate-800 '>Insert task</button>
 
                     </div>
                 </div>
             </div> : null}
 
-            {archivosdiv ? <div className=" col-span-6 bg-gray-900 ">
-                <div className="container p-16">
-                    <div className='flex flex-col w-96 m-auto gap-3'>
+            {archivosdiv ? <div className="absolute w-full h-screen  bg-slate-600 ">
+               
+                    <div className='flex flex-col p-12 sm:w-2/3 m-auto gap-3 sm:p-12'>
                         <h1 className='text-white text-2xl'>Lista de archivos por estudiantes</h1>
                         {filelist.map(file => <div>
 
                             <ol className='text-white list-disc'>
-                                <li className='mt-4'>
-                                    <p>Ver archivo:</p> <a className='text-gray-400' href={'https://emfjomsevzoytidqbiih.supabase.co/storage/v1/object/public/files/tareas/' + file.name}>{file.name}</a>
+                                <li className='mt-4 sm:flex gap-3'>
+                                    <p>Ver archivo:</p> <a className='text-gray-400 hover:text-gray-200' href={'https://emfjomsevzoytidqbiih.supabase.co/storage/v1/object/public/files/tareas/' + file.name}>{file.name}</a>
                                 </li>
                             </ol>
                         </div>)}
                     </div>
-                </div>
+          
             </div> : null}
 
-            {tasklistdiv ? <div className='col-span-4 bg-slate-600 p-16'>
+            {tasklistdiv ? <div className='absolute w-full h-screen top-0  bg-slate-600 sm:p-16'>
+                <h2 className='text-center text-white font-bold text-xl mt-5'>Lista de tareas</h2>
+                {alertupdate == " " ? null : <p className='transition-all ease-out text-center text-white font-bold text-xl mt-5 bg-green-400  border-green-300 border-spacing-4 border-2 rounded-md w-64 py-3 m-auto'>{alertupdate}✅</p>}
                 {listtask.map(task =>
 
-                    <div key={task.id} className='flex rounded flex-col  px-6 bg-slate-500 my-5 py-2 h-48'>
+      
 
-                        <input onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
-                        <input onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
-                        <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} className='text-black'>
-                            {task.description}
-                        </textarea>
-                        <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-orange-400 py-3 mt-2'>Update task</button>
-                    </div>
+                        <div key={task.id} className='flex rounded gap-1 sm:w-2/5 m-auto flex-col  px-6  my-5 py-2'>
+
+                            <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
+                            <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
+                            <textarea classNamer='rounded-xl' onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} className='text-black'>
+                                {task.description}
+                            </textarea>
+                            <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-transparent border text-white transition-all ease-in border-white   py-3 mt-2 hover:bg-black hover:text-white'>Update task</button>
+                        </div>
+                
 
                 )}
             </div> : null}
