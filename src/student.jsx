@@ -116,7 +116,7 @@ function Student() {
                             <h2 className='text-xs bg-amber-600 font-bold p-2 rounded-md'>{task.fecha}</h2>
                         </div>
                         <p className='mt-3 font-semibold text-xl'>Descripcion:</p>
-                        <textarea className='bg-slate-900 text-white p-0 my-3 h-48 ps-3 pt-3' value='' disabled>{task.description}</textarea>
+                        <textarea className='bg-slate-900 text-white p-0 my-3 h-48 ps-3 pt-3' value={task.description} disabled>{task.description}</textarea>
 
                         <input onChange={e => handleruploadfile(e)} data-task={task.name}  type='file' id={task.id} className='bg-slate-400 py-0 mt-4'/>
                         <button className='bg-slate-400 py-2 mt-3 hover:bg-black hover:text-white transition-all ease-in'>Subir archivo</button>
