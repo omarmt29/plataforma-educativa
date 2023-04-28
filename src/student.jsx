@@ -14,7 +14,7 @@ function Student() {
         const getsession = async () => {
 
             const { data, error } = await supabase.auth.getSession()
-            if (data.session && data.session.user.email !== 'omarmendezt29@gmail.com') {
+            if (data.session && data.session.user.email !== 'omarmendezt29@gmail.com' || data.session && data.session.user.email !== 'juan.08migu@gmail.com') {
                 navegacion('/student')
         
                 setuseractive(data.session.user.email)

@@ -175,7 +175,7 @@ function Dashboard() {
                         <input onChange={e => setnewtask({ ...newtask, name: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='titulo' placeholder='Titulo' />
                         <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} className='h-72 resize-none bg-slate-500 text-white placeholder-slate-50' type="text" name='Descripcion' placeholder='Descripcion' />
                         <input onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='fecha' placeholder='Fecha de entrega' />
-                        <input className='w-full bg-slate-300 hover:cursor-pointer' type="file" name='archivo' placeholder='Adjuntar archivo' />
+                      
                         <button onClick={e => handlercreatenewtask(e)} className='bg-black py-3 text-white hover:bg-slate-800 '>Insert task</button>
 
                     </div>
@@ -205,7 +205,7 @@ function Dashboard() {
 
                         <input onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
                         <input onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
-                        <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} value='' name='description' placeholder={task.description} className='text-black'>
+                        <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} className='text-black'>
                             {task.description}
                         </textarea>
                         <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-orange-400 py-3 mt-2'>Update task</button>
