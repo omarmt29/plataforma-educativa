@@ -122,7 +122,7 @@ function App() {
 
 
 
-      {admin && admin == 'omarmendezt29@gmail.com' || admin && admin == 'juan.08migu@gmail.com@gmail.com'
+      {admin && admin == 'omarmendezt29@gmail.com' || admin && admin == 'juan.08migu@gmail.com'
         ?
         <div>
           <h2 className='text-white text-center mb-7 text-4xl'>Selecciona la materia</h2>
@@ -144,7 +144,7 @@ function App() {
       }
 
 
-      {admin && admin !== 'omarmendezt29@gmail.com' || admin && admin !== 'juan.08migu@gmail.com@gmail.com' ?
+      {admin && admin !== 'omarmendezt29@gmail.com' || admin && admin !== 'juan.08migu@gmail.com' ?
         <div className='mt-4 flex flex-col justify-center'>
           <p className='text-white bg-green-700 p-6 mb-4'>Please check your email!! ✅</p>
           <button className='bg-red-700 text-white p-3' onClick={e => handleLogout(e)}>Volver</button>
