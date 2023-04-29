@@ -63,6 +63,24 @@ function Student() {
             });
     }
 
+    
+    const getnotademi = async (e) => {
+
+        const { data, error } = await supabase.auth.getSession()
+        console.log(data.session.user.id)   
+        setuserid(data.session.user.id)
+
+        const getnota = async () => {
+            const { data, error } = await supabase
+            .from('profile')
+            .select()
+            
+            console.log( data[0].nota)
+        }
+        getnota()
+
+    }
+
     return (
         <div className='w-full grid grid-cols-12 bg-slate-900'>
             <aside id="default-sidebar" className="col-span-2 h-screen" aria-label="Sidebar">
@@ -113,7 +131,11 @@ function Student() {
 
                         <div className='flex items-center justify-between'>
                             <h2 className='font-semibold text-3xl'>{task.name}</h2>
-                            <h2 className='text-xs bg-amber-600 font-bold p-2 rounded-md'>{task.fecha}</h2>
+                            <div className='flex flex-rap gap-2'>
+                                <h2 className='text-xs bg-green-500 text-white font-bold p-2 rounded-md'>Sociales</h2>
+                                <h2 className='text-xs bg-amber-600 font-bold p-2 rounded-md'>{task.fecha}</h2>
+                            
+                            </div>                           
                         </div>
                         <p className='mt-3 font-semibold text-xl'>Descripcion:</p>
                         <textarea className='bg-slate-900 text-white p-0 my-3 h-48 ps-3 pt-3' value={task.description} disabled>{task.description}</textarea>
