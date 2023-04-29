@@ -241,7 +241,8 @@ function Student() {
 
                         <div className='flex flex-col gap-3 items-center justify-between'>
                             <h1 className='text-3xl font-semibold text-slate-200'>Nota final de la materia:</h1>
-                            {task.nota > 60 ? <h2 className='font-semibold text-5xl mb-3 text-blue-300'>{task.nota}</h2> : <div className='flex gap-2'>Reprobado: <p className='text-red-500 font-bold'>{task.nota}</p> </div>}
+                            
+                            {task.nota > 60 ? (<h2 className='font-semibold text-5xl mb-3 text-blue-300'>{task.nota}</h2>) : ( task.nota == null ? <p>No hay materia publicada</p> : <div className='flex gap-2'>Reprobado: <p className='text-red-500 font-bold'>{task.nota}</p> </div>)}
                             <div className='flex flex-rap gap-2'>
                                 <h2 className='text-xs bg-green-500 text-white font-bold p-2 rounded-md'>Sociales</h2>
 
