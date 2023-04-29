@@ -146,6 +146,20 @@ function Dashboard() {
 
     }
 
+    const handlerdeletetask = async (e) => {
+        const { error } = await supabase
+            .from('task')
+            .delete()
+            .eq('id', e.target.id)
+
+        if (!error) {
+            const { data, error } = await supabase
+                .from('task')
+                .select()
+            setconferencelist(data)
+        }
+    }
+
 
 
 
@@ -367,7 +381,7 @@ function Dashboard() {
                     </ul>
                     <h2 className='text-blue-500 text-xl font-semibold mt-4'>Horario de la materia:</h2>
                     <p className='text-slate-400'>La materia de Sociales se imparte los días lunes, miércoles y viernes de 10:00 a 11:30 AM.</p>
-                 
+
                 </div>
             </div> : null}
 
@@ -397,7 +411,7 @@ function Dashboard() {
                                 </textarea>
                                 <div className='flex flex-wrap  '>
                                     <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-green-500 border text-white transition-all ease-in border-white w-1/2   py-3 mt-2 hover:bg-black hover:text-white'>Update task</button>
-                                    <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-red-500 border text-white transition-all ease-in border-white w-1/2   py-3 mt-2 hover:bg-black hover:text-white'>Delete task</button>
+                                    <button onClick={e => handlerdeletetask(e)} id={task.id} className='bg-red-500 border text-white transition-all ease-in border-white w-1/2   py-3 mt-2 hover:bg-black hover:text-white'>Delete task</button>
                                 </div>
                             </div>
 
