@@ -147,16 +147,16 @@ function Dashboard() {
     }
 
     const handlerdeletetask = async (e) => {
+  
+
         const { error } = await supabase
             .from('task')
             .delete()
             .eq('id', e.target.id)
-
+            console.log(error)
         if (!error) {
-            const { data, error } = await supabase
-                .from('task')
-                .select()
-            setconferencelist(data)
+            const { data } = await supabase.from('task').select().order('id', { ascending: false });
+            setlisttask(data)
         }
     }
 
@@ -406,7 +406,7 @@ function Dashboard() {
 
                                 <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
                                 <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
-                                <textarea classNamer='rounded-xl' onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} className='text-black'>
+                                <textarea className='rounded-xl text-white' onChange={e => setnewtask({ ...newtask, description: e.target.value })}  name='description' placeholder={task.description}>
                                     {task.description}
                                 </textarea>
                                 <div className='flex flex-wrap  '>
@@ -494,7 +494,7 @@ function Dashboard() {
 
                         <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
                         <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
-                        <textarea classNamer='rounded-xl' onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} className='text-black'>
+                        <textarea className='rounded-xl' onChange={e => setnewtask({ ...newtask, description: e.target.value })} name='description' placeholder={task.description} >
                             {task.description}
                         </textarea>
                         <button onClick={e => handlerupdatetask(e)} id={task.id} className='bg-transparent border text-white transition-all ease-in border-white   py-3 mt-2 hover:bg-black hover:text-white'>Update task</button>
