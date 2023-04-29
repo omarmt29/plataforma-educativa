@@ -74,6 +74,7 @@ function Dashboard() {
         setarchivosdiv(true)
         settasklistdiv(false)
         setasignar(false)
+        setlogindiv(false)
         setzoomdiv(false)
         setnotadiv(false)
         // 'https://emfjomsevzoytidqbiih.supabase.co/storage/v1/object/public/files/tareas/' + data[1].name
@@ -108,6 +109,8 @@ function Dashboard() {
         setasignar(!asignar)
         settasklistdiv(false)
         setarchivosdiv(false)
+        setlogindiv(false)
+
         setnotadiv(false)
         setzoomdiv(false)
         const { data } = await supabase.from('task').select().order('id', { ascending: false });
@@ -209,6 +212,8 @@ function Dashboard() {
         setasignar(false)
         settasklistdiv(false)
         setarchivosdiv(false)
+        setlogindiv(false)
+
         setzoomdiv(!zoomdiv)
         const { data, error } = await supabase
             .from('conference')
@@ -253,6 +258,7 @@ function Dashboard() {
         console.log(data)
         setprofile(data)
         setzoomdiv(false)
+        setlogindiv(false)
 
         setnotadiv(!notadiv)
         setasignar(false)
@@ -299,6 +305,7 @@ function Dashboard() {
         setarchivosdiv(false)
         setzoomdiv(false)
 
+
     }
 
 
@@ -315,7 +322,7 @@ function Dashboard() {
                         <li onClick={e => handlerlogindiv(e)} className='hover:animate-pulse hover:pl-3'>
                             <a className="flex items-center p-2 py-6 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer transition-all ease-in-out ">
                                 <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-black dark:group-hover:text-black" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                                <span className="ml-3  ">Inicio</span>
+                                <span className="ml-3  ">Sociales</span>
                             </a>
                         </li>
 
@@ -467,8 +474,8 @@ function Dashboard() {
 
                     {alertupdate == " " ? null : <p className='transition-all ease-out text-center text-white font-bold text-xl mt-5 bg-green-400  border-green-300 border-spacing-4 border-2 rounded-md w-96 py-3 m-auto'>{alertupdate}✅</p>}
                     <h1 className='text-white text-2xl'>Subir videoconferencia</h1>
-                    <input className='bg-slate-500' type="text" required placeholder='Titulo' onChange={e => setnewzoom({ ...newzoom, title: e.target.value })} />
-                    <input className='bg-slate-500' type="text" required placeholder='Ejemplo: https://meet.google.com/ojz-wcmx-eve' name='link' onChange={e => setnewzoom({ ...newzoom, link: e.target.value })} />
+                    <input className='bg-slate-700 text-slate-200' type="text" required placeholder='Titulo' onChange={e => setnewzoom({ ...newzoom, title: e.target.value })} />
+                    <input className='bg-slate-700 text-slate-200' type="text" required placeholder='Ejemplo: https://meet.google.com/ojz-wcmx-eve' name='link' onChange={e => setnewzoom({ ...newzoom, link: e.target.value })} />
                     <div className='w-20'>
                         <button onClick={e => handlernewzoom(e)} className='bg-black text-white transition ease-out py-2 px-4 rounded'>Publicar</button>
                     </div>
