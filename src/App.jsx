@@ -38,6 +38,7 @@ function App() {
       password: user.password,
     })
     window.location.reload(false);
+    console.log('data del login')
     console.log(data)
 
   }
@@ -83,8 +84,8 @@ function App() {
       } else if (!data.session) {
         console.log('no hay ni mielda')
       }
-
-      // if(!data.session && !data.session.user.email == 'omarmendezt29@gmail.com'){
+    
+      // if(!data.session && !data.session  .user.email == 'omarmendezt29@gmail.com'){
       //   console.log('soy estudiante')
       // }
 
@@ -144,7 +145,7 @@ function App() {
       }
 
 
-      {admin && admin !== 'omarmendezt29@gmail.com' || admin && admin !== 'juan.08migu@gmail.com' ?
+      {admin && admin !== 'omarmendezt29@gmail.com' && admin !== 'juan.08migu@gmail.com' ?
         <div className='mt-4 flex flex-col justify-center'>
           <p className='text-white bg-green-700 p-6 mb-4'>Please check your email!! ✅</p>
           <button className='bg-red-700 text-white p-3' onClick={e => handleLogout(e)}>Volver</button>

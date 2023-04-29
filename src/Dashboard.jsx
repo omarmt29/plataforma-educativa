@@ -36,8 +36,9 @@ function Dashboard() {
 
             const { data, error } = await supabase.auth.getSession()
 
+            console.log(data)
 
-            if (data.session && data.session.user.email !== 'omarmendezt29@gmail.com') {
+            if (data && data.user.email !== 'omarmendezt29@gmail.com' || data && data.user.email !== 'juan.08migu@gmail.com') {
 
                 navegacion('/')
             } else if (!data.session) {
@@ -45,9 +46,9 @@ function Dashboard() {
                 navegacion('/')
             }
 
-            // if(!data.session && !data.session.user.email == 'omarmendezt29@gmail.com'){
-            //   console.log('soy estudiante')
-            // }
+            if(!data.session && !data.session.user.email == 'omarmendezt29@gmail.com'){
+              console.log('soy estudiante')
+            }
 
 
         }
