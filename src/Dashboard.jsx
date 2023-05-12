@@ -28,7 +28,7 @@ function Dashboard() {
     const [logindiv, setlogindiv] = useState(true);
 
 
-    // verificar si tienes permitido ver el dashboard
+    // verificar si tienes permitido ver el dashboardd
 
     useEffect(() => {
 
@@ -398,7 +398,7 @@ function Dashboard() {
                     <h1 className='text-center text-white font-bold text-xl mt-5'>Insertar task</h1>
                     <div className='flex flex-col m-auto w-full gap-3 mb-5'>
                         <input onChange={e => setnewtask({ ...newtask, name: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='titulo' placeholder='Titulo' />
-                        <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} className='h-72 resize-none bg-slate-500 text-white placeholder-slate-50' type="text" name='Descripcion' placeholder='Descripcion' />
+                        <textarea onChange={e => setnewtask({ ...newtask, description: e.target.value })} className='h-72 resize-none bg-slate-500 text-black placeholder-slate-50' type="text" name='Descripcion' placeholder='Descripcion' />
                         <input onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} className='bg-slate-500 text-white placeholder-slate-50' type="text" name='fecha' placeholder='Fecha de entrega' />
 
                         <button onClick={e => handlercreatenewtask(e)} className='bg-black py-3 text-white hover:bg-slate-800 '>Insert task</button>
@@ -414,7 +414,7 @@ function Dashboard() {
 
                                 <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, name: e.target.value })} name='name' placeholder={task.name} type="text" />
                                 <input className='py-3 border border-black rounded-md' onChange={e => setnewtask({ ...newtask, fecha: e.target.value })} name='fecha' type="text" placeholder={task.fecha} />
-                                <textarea className='rounded-xl text-white' onChange={e => setnewtask({ ...newtask, description: e.target.value })}  name='description' placeholder={task.description}>
+                                <textarea className='rounded-xl text-black' onChange={e => setnewtask({ ...newtask, description: e.target.value })}  name='description' placeholder={task.description}>
                                     {task.description}
                                 </textarea>
                                 <div className='flex flex-wrap  '>

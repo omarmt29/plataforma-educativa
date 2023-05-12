@@ -7,9 +7,10 @@ function App() {
 
   const [user, setUser] = useState({ email: '', password: '' });
   const [Login, setLogin] = useState(true)
-  // const [profile, setprofile] = useState({ id: '', email: '')
   const [admin, setadmin] = useState(false);
   const navegacion = useNavigate();
+
+  // Manejador de crear usuario
 
   const CreateUser = async (e) => {
     e.preventDefault()
@@ -31,6 +32,8 @@ function App() {
     setadmin(data.user.email)
   }
 
+  // Manejador de login
+
   const login = async (e) => {
     e.preventDefault()
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -42,6 +45,8 @@ function App() {
     console.log(data)
 
   }
+
+  // Manejador de logout
 
   function handleLogout(e) {
     e.preventDefault()
@@ -56,6 +61,8 @@ function App() {
         console.log("Error en el logout", error);
       });
   }
+
+  // Manejador de materia
 
   function handlermateria(e) {
     e.preventDefault()
@@ -85,25 +92,16 @@ function App() {
         console.log('no hay ni mielda')
       }
     
-      // if(!data.session && !data.session  .user.email == 'omarmendezt29@gmail.com'){
-      //   console.log('soy estudiante')
-      // }
-
+   
 
     }
+
     getsession()
+    
   }, [])
-
-
-
-
-  // {admin == 'omarmendezt29@gmail.com' ? 'hola' : 'no hay na'}
 
   return (
     <div className='w-full h-screen flex-col flex justify-center items-center bg-slate-950'>
-
-
-
 
       {!admin
 
@@ -120,8 +118,6 @@ function App() {
 
         null
       }
-
-
 
       {admin && admin == 'omarmendezt29@gmail.com' || admin && admin == 'juan.08migu@gmail.com'
         ?
@@ -143,7 +139,6 @@ function App() {
         :
         null
       }
-
 
       {admin && admin !== 'omarmendezt29@gmail.com' && admin !== 'juan.08migu@gmail.com' ?
         <div className='mt-4 flex flex-col justify-center'>
